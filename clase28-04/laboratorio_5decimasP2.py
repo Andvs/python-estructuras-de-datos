@@ -57,5 +57,5 @@ resultadoresta = suma(matriz1, matriz2)
 print (f"la primera matriz es:{matriz1}")
 print (f"la segunda matriz es:{matriz2}")
 print(f"la suma de ambas matrizes es:{resultadosuma}")
-print(f"la suma de ambas matrizes es:{resultadoresta}")
+print(f"la resta de ambas matrizes es:{resultadoresta}")
 
