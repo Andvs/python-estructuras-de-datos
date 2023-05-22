@@ -1,69 +1,70 @@
-import random
 # Aplicar el metodo de Gauss para invertir una matriz aleatoria de 3 a 5 de dimensi ´ on sin ´
 # utilizar librerias. Imprimir la matriz original y luego la matriz inversa. Recordar que si una
 # matriz A es una matriz cuadrada no-singular, es decir, tal que su determinante es distinto
-# de cero se puede utilizar el Metodo de Eliminaci ´ on Gaussiana.
+# de cero se puede utilizar el Metodo de Eliminaci ´ on Gaussiana
+import random
 
-def crearMatriz(filas, columnas):
+filas=random.randint(3,5)
+columnas=random.randint(3,5)
+
+# se crea una matriz aleatoria de tamaño entre 3 a 5 con elemetos entre 1 y 9
+
+def crear_matriz(filas, columnas):
+
     matriz = []
     for i in range(filas):
-        matriz.append([])
+        fila = []
         for j in range(columnas):
             elemento = random.randint(1,9)
-            matriz[i].append(elemento)
+            fila.append(elemento)
+        matriz.append(fila)
     return matriz
 
-def crearMatrizIdentidad(filas, columnas):
-    matriz = []
-    for i in range(filas):
-        matriz.append([])
-        for j in range(columnas):
-            if i == j:
-                matriz[i].append(1)
-            else:
-                matriz[i].append(0)
-    return matriz
+matriz=crear_matriz(filas,columnas)
 
-def mostrarMatriz(matriz):
-    for filas in matriz:
-        print('[', end=' ')
-        for elemento in filas:
-            print(elemento, end=' ')
-        print(']')
+# imprime la matriz de forma mas ordenada,haciendo que se imprima cada fila hacia abajo.
+def imprimir_matriz(matriz):
+    for fila in matriz:
+        print(fila)
+    print()
 
-def calcularInversa(matriz):
-    filaActual = matriz[0]
-    for i in range(len(matriz)):
-        for j in range(len(matriz[0])):
-            if i != j  and matriz[i][j] != 0:
-                filaActual = multiplicarListas(filaActual, matriz[i+1][j+1])
-    return matriz
+print("la matriz es:")
+imprimir_matriz(matriz)
 
-def multiplicarListas(lista, num):
-    num = 2
-    resultado = []
-    for elemento in lista:
-        resultado.append(elemento*num)
-    return resultado
+# cambia las filas,verificando si el primer elemento es 1,si lo es devuelve la matriz original,
+# sino verifica el primer elemento de cada fila de la matriz hasta encontrar alguna con el primer elemento 1
+# y la intercambia por la primera fila
 
-def restarListas(lista1,lista2):
-    resultado = []
-    for i in range(len(lista1)):
-        resultado.append(lista1[i]-lista2[i])
-    return resultado
+def cambiar_filas(matriz):
 
+    if matriz[0][0] == 1:
+        return matriz
+    else:
+        for i in range(len(matriz)):
+            if matriz[i][0] == 1:
+                matriz[0], matriz[i] = matriz[i], matriz[0]
+        return matriz
+    
+matrizcambiada=cambiar_filas(matriz)
+print("la matriz cambiada es:")
+imprimir_matriz(matrizcambiada)
 
-# [ 1 0 0 ]
-# [ 0 1 0 ]
-# [ 0 0 1 ]
+# si la funcion anterior devuelve la matriz original,este funcion hara que le primer elemento de la matriz sea 1,
+# primero calcula el numero por el que dividira la primera fila para que le primer elemento de 1 ,dividiendo el 
+# primer elemento de la matriz en 1,luego recorre toda la fila dividiendp cada numero por el divisor calculado.
+# Y si la matriz ya tiene como primer elemeto un 1 devuelve la matriz original.
 
+def dividir_filas(matriz):
 
+    if matriz[0][0] != 1:
+        divisor = matriz[0][0] / 1 
+        for i in range(len(matriz[0])):
+            matriz[0][i] = matriz[0][i] / divisor 
+        return matriz
+    else:
+        return matriz
 
-dimension = random.randint(3,5)
-matriz = crearMatriz(dimension,dimension)
-identidad = crearMatrizIdentidad(dimension,dimension)
-
-mostrarMatriz(identidad)
-
-
-
+matrizdividida= dividir_filas(matriz)
+print("la matriz dividida es:")
+imprimir_matriz(matrizdividida)
+    

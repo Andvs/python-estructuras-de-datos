@@ -5,7 +5,6 @@ import random
 # biblioteca numpy.
 
 
-
 def crearMatriz(filas, columnas):
     matriz = []
     for i in range(filas):
@@ -32,6 +31,7 @@ def sumasColumnas(matriz):
             suma += matriz[j][i]
         sumasColumnas.append(suma)
     return sumasColumnas
+
 #crea una lista con las suma de los elementos de cada fila
 def sumasFilas(matriz):
     sumasFilas = []
