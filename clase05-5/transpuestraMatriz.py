@@ -9,18 +9,19 @@
 #      [3,6]]
 
 m = [[1,4],
-      [2,5],
-      [3,6]]
+     [2,5],
+     [3,6]]
 
 def transpuesta(matriz):
     transpuesta = []
     for i in range(len(matriz[0])):
         transpuesta.append([])
         for j in range(len(matriz)):
-            transpuesta[i].append(m[j][i])
+            transpuesta[i].append(matriz[j][i])
     return transpuesta
 
 t = transpuesta(m)
+
 print(t)
 for filas in t:
     print('[', end= ' ')
