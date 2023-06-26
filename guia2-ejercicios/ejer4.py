@@ -19,60 +19,92 @@
 # cantidad total de productos que hay en el almacén, sumando la cantidad de
 # productos recibidos en la pila y la cantidad de productos para despachar en la cola.
 
+
+class Pila:
+# se crea la clase pila la cual representara la lista de productos_recibidos
+    def __init__(self):
+        self.productos = []
+
+    def agregar(self,producto):
+        self.productos.append(producto)
+
+    def quitar(self):
+        if not self.is_empty():
+            self.productos.pop()
+        else:
+            raise ValueError("la pila productos estas vacia")
+        
+    def is_empty(self):
+        return len(self.productos)==0
+    
+    def imprimir(self):
+        print(self.productos)
+
+class Cola:
+#se crea la clase cola la cual representara la lista de productos_despacho
+    def __init__(self):
+        self.productos=[]
+
+    def encolar(self,producto):
+        self.productos.append(producto)
+
+    def desencolar(self):
+        if self.is_empty():
+            raise ValueError("la cola esta vacia")
+        return self.productos.pop()
+    
+    def is_empty(self):
+        return len(self.productos)==0
+    
+    def imprimir(self):
+        print(self.productos)
+
 class Almacen:
     
     def __init__(self):
-        self.pila_productos_recibidos = []
-        self.cola_productos_para_despachar = []
-    
-
-    #cuando se agrega un producto, se agrega a la lista de recibidos, pero
-    #a la vez, significa que es un producto que se puede despachar, por lo que
-    #también se agrega a la lista de productos para despachar.
+        self.productos_recibidos = Pila()
+        self.productos_despacho = Cola()
 
     def agregar_producto(self,producto):
-        self.pila_productos_recibidos.append(producto)
-        self.cola_productos_para_despachar.append(producto)
-
-    #se verifica que la lista para despachar no este vacia, si lo
-    #esta se imprime un mensaje que informe que no hay productos disponibles
-    #para despachar.
-    #de lo contrario se elimina el primero elemento de la lista
+    #agrega un producto a self.productos_recibidos y a self.productos_despacho
+        self.productos_recibidos.agregar(producto)
+        self.productos_despacho.encolar(producto)
 
     def despachar_producto(self):
-        if self.productos_despacho_is_empty():
-            print("No hay productos disponibles para despachar")
+        #Despacha el ultimo elemento de productos_despacho
+        if not self.productos_recibidos.is_empty():
+            self.productos_despacho.desencolar()
         else:
-            return self.cola_productos_para_despachar.pop(0)
+            print("No hay productos disponibles para despachar")
 
     def productos_recibidos_is_empty(self):
-        if len(self.pila_productos_recibidos)==0:
+    #si productos_Recibidos no tiene elementos devuelve un mensaje confirmandolo.
+        if self.productos_recibidos.is_empty():
             print("La pila de productos recibidos está vacía")
  
     def productos_despacho_is_empty(self):
-    
-        if len(self.cola_productos_para_despachar)==0:
+    #si productos_despacho no tiene elementos devuelve un mensaje confirmandolo.
+        if self.productos_despacho.is_empty():
             print("La cola de productos para despachar está vacía")
     
-    #la pila de productos recibidos funciona como un registro de los productos
-    #agregados, por lo que también estan ordenados según van llegando.
-    #por lo que esta lista no se va modificando, la lista de productos para
-    #despachar es la unica en la que se eliminan los productos.
-
     def imprimir_productos_recibidos(self):
-        print(f'Pila de productos recibidos: {self.pila_productos_recibidos}')
+    #imprime en un lista los elementos de productos_recibidos.
+        self.productos_recibidos.imprimir()
 
     def imprimir_productos_despacho(self):
-        print(f'Cola de productos para despachar: {self.cola_productos_para_despachar}')
-
-    #se cuentan los productos que hay en la cola, es decir, los productos que 
-    #estan disponibles para despachar, ya que esos realmente representan los productos
-    # que hay actualmente en el almacen. Ya que la pila de productos recibidos funciona
-    # como un registro de todos los productos que se han agregado y no tiene sentido sumar las 
-    # listas para obtener los productos que hay en el almacen.
+    #imprime en un lista los elementos de productos_despacho.
+        self.productos_despacho.imprimir()
 
     def total_productos(self):
-        print(f'En el almacen hay actualmente un total de {len(self.cola_productos_para_despachar)} productos.')
+    # devuelve la cantidad de productos disponibles en el almacen
+        productos_recibidos = len(self.productos_recibidos.productos)
+        productos_despacho = len(self.productos_despacho.productos)
+        total = productos_recibidos - productos_despacho
+
+        if total >= 0:
+            print(f"Hay {productos_despacho} productos ")
+        else:
+            print("No hay productos")
         
 almacen = Almacen()
 almacen.productos_recibidos_is_empty()
@@ -82,20 +114,21 @@ almacen.agregar_producto("gallatas")
 almacen.agregar_producto("torta")
 almacen.agregar_producto("carne")
 almacen.agregar_producto("chocolate")
+almacen.productos_recibidos_is_empty()
+almacen.productos_despacho_is_empty()
+print()
 almacen.imprimir_productos_recibidos()
 almacen.imprimir_productos_despacho()
-print('--------------------')
+print()
 almacen.despachar_producto()
-almacen.despachar_producto()
-almacen.despachar_producto()
-almacen.despachar_producto()
-almacen.despachar_producto()
-# almacen.despachar_producto()
-print('-----------------------------')
-almacen.imprimir_productos_recibidos()
-almacen.imprimir_productos_despacho()
 
+almacen.imprimir_productos_recibidos()
+almacen.imprimir_productos_despacho()
+print()
 almacen.total_productos()
+
+
+
 
 
 
