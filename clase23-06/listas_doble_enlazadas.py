@@ -17,7 +17,6 @@ nodo anterior o realizar ajustes en los enlaces.
 -como cada nodo tiene una referencia al nodo anterior. es posible revertir rápidamente 
 el orden de los en la lista sin tener que reconstruir la estructura.
 
-
 '''
 
 class Nodo:
